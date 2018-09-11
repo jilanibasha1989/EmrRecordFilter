@@ -1,0 +1,23 @@
+[0m[[0m[0minfo[0m] [0m[0mPackaging G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\recordfilter_2.11-0.2.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter$$typecreator2$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter$$typecreator2$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter$$anonfun$main$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter$$anonfun$main$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter$$typecreator1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter$$typecreator1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	config.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\config.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter$$anonfun$main$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter$$anonfun$main$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com\automation\RecordFilter$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  G:\preExternalProjects\EmrRecordFilter\target\scala-2.11\classes\com\automation\RecordFilter$$anonfun$1.class[0m
+[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m
