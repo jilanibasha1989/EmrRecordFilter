@@ -24,27 +24,25 @@ object RecordFilter {
 
   var argsMap = new LinkedHashMap[String, String]
 
-  def createS3OutputFile(spark: SparkSession, fileNamePattern: String, inputFileLoc: String, outputFileLoc: String, filter_required: String, filterCol: List[String], dateModifier: String) {
+  def createS3OutputFile(fileDf: DataFrame, fileNamePattern: String, outputFileLoc: String, filter_required: String, filterCol: List[String], dateModifier: String):DataFrame = {
 
-    import spark.implicits._
+    import fileDf.sparkSession.implicits._
 
     //cst to gmt time zone convert UDF
     val func = udf(convertToGmt(_: String));
 
-    // use s3n ! as input and write  output  s3 location
-    val fileDf = spark.read.format("csv").option("header", "true").load(inputFileLoc)
 
     //collecting the columns from the Dataframe
     val collectCols = fileDf.columns.seq
 
-    //
+    // check for if the given task required filter or not
     if (filter_required == "N") {
 
       val cnvrtToGmtDF = fileDf.withColumn("newdatetimecol", func(col(dateModifier)))
 
       val updatedSchemeDF = updateSchema(cnvrtToGmtDF, collectCols, dateModifier)
 
-      updatedSchemeDF.write.format("parquet").mode("append").option("compression", "snappy").save(outputFileLoc)
+      return updatedSchemeDF
 
     } else {
 
@@ -54,11 +52,11 @@ object RecordFilter {
 
       val updatedSchemeDF = updateSchema(cnvrtToGmtDF, collectCols, dateModifier)
 
-      cnvrtToGmtDF.write.format("parquet").mode("append").option("compression", "snappy").save(outputFileLoc)
+      return cnvrtToGmtDF
     }
     // cnvrtToGmtDF.select("")
 
-    spark.stop()
+    
   }
 
   //function to filter out the rows from the data and return dataframe
@@ -146,9 +144,16 @@ object RecordFilter {
         val outputFileLocation = fileVar(5).split("=")(1)
 
         println("soruce data : = " + sourcedata + " inputFileLocation : = " + inputFileLocation + " filterColunn : =  " + fileVar(1).split("=")(1) + " dateModifier :=  " + dateModifier + " outputFileLocation : = " + outputFileLocation)
-
-        createS3OutputFile(spark, fileNamePattern, inputFileLocation, outputFileLocation, filterrequired, filterColunn, dateModifier)
+       
+        // use s3n ! as input and write  output  s3 Location
+        val fileDf = spark.read.format("csv").option("header", "true").load(inputFileLocation)
+        
+       val outputDF=   createS3OutputFile(fileDf, fileNamePattern, outputFileLocation, filterrequired, filterColunn, dateModifier)
+       
+        outputDF.write.format("parquet").mode("append").option("compression", "snappy").save(outputFileLocation)
     }
+    
+    spark.stop()
 
   }
 
