@@ -1,4 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0mG:\preExternalProjects\EmrRecordFilter\src\main\scala\com\automation\RecordFilter.scala:70:52: not found: value convertGmtUdf[0m
-[0m[[0m[31merror[0m] [0m[0m    val filiterDf = df.withColumn("newdatetimecol",convertGmtUdf($"Datetime"))[0m
-[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
