@@ -26,9 +26,6 @@ object RecordFilter {
 
   def createS3OutputFile(spark: SparkSession, fileNamePattern: String, inputFileLoc: String, outputFileLoc: String, filter_required: String, filterCol: List[String], dateModifier: String) {
 
-    //setup configuration
-    spark.conf.set("spark.sql.shuffle.partitions", 1);
-
     import spark.implicits._
 
     //cst to gmt time zone convert UDF
@@ -36,14 +33,16 @@ object RecordFilter {
 
     // use s3n ! as input and write  output  s3 location
     val fileDf = spark.read.format("csv").option("header", "true").load(inputFileLoc)
+
+    //collecting the columns from the Dataframe
     val collectCols = fileDf.columns.seq
 
-    // 
+    //
     if (filter_required == "N") {
 
       val cnvrtToGmtDF = fileDf.withColumn("newdatetimecol", func(col(dateModifier)))
-      
-      val updatedSchemeDF = updateSchema(cnvrtToGmtDF,collectCols,dateModifier)
+
+      val updatedSchemeDF = updateSchema(cnvrtToGmtDF, collectCols, dateModifier)
 
       updatedSchemeDF.write.format("parquet").mode("append").option("compression", "snappy").save(outputFileLoc)
 
@@ -52,8 +51,8 @@ object RecordFilter {
       val filterRecordDf = filterRecord(fileDf, filterCol)
 
       val cnvrtToGmtDF = filterRecordDf.withColumn("newdatetimecol", func(col(dateModifier)))
-      
-      val updatedSchemeDF = updateSchema(cnvrtToGmtDF,collectCols,dateModifier)
+
+      val updatedSchemeDF = updateSchema(cnvrtToGmtDF, collectCols, dateModifier)
 
       cnvrtToGmtDF.write.format("parquet").mode("append").option("compression", "snappy").save(outputFileLoc)
     }
@@ -72,10 +71,10 @@ object RecordFilter {
     return df;
   }
 
-  def updateSchema(df: DataFrame, collectCols: IndexedSeq[String],dateColumn:String): DataFrame = {
+  def updateSchema(df: DataFrame, collectCols: IndexedSeq[String], dateColumn: String): DataFrame = {
 
     import df.sparkSession.implicits._
-    
+
     val removeColumnFromList = collectCols.filter(_ == dateColumn).toArray
     val finalColumns = collectCols.toArray
 
@@ -121,6 +120,9 @@ object RecordFilter {
       .master("local")
       .getOrCreate()
 
+    //setup configuration
+    spark.conf.set("spark.sql.shuffle.partitions", 1);
+
     // loading the properties files from resource folder
     val properties = this.getClass().getClassLoader().getResourceAsStream("config.properties")
     val propRecords = Source.fromInputStream(properties).getLines()
@@ -147,7 +149,6 @@ object RecordFilter {
 
         createS3OutputFile(spark, fileNamePattern, inputFileLocation, outputFileLocation, filterrequired, filterColunn, dateModifier)
     }
-    
 
   }
 
